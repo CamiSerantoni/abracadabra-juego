@@ -44,15 +44,22 @@ devolver la imagen “who.jpeg”. (2 Punto*/
 app.use('/abracadabra/juego/:usuario', (req, res, next) => {
     const { usuario } = req.params;
     
-  
     if (usuarios.map(u => u.trim().toLowerCase()).includes(usuario.trim().toLowerCase())) {
-
-      next();
+        // Si el usuario existe en el arreglo, pasamos al siguiente middleware
+        next();
     } else {
-      // User is invalid, send the "who.jpeg" image
-      res.sendFile(__dirname + '/assets/who.jpeg');
+        // Si el usuario no existe, enviamos un error 404
+        res.sendFile(__dirname + '/assets/who.jpeg');
     }
-  });
+});
+
+// Ruta GET correspondiente
+app.get('/abracadabra/juego/:usuario', (req, res) => {
+    const { usuario } = req.params;
+    // Aquí puedes agregar la lógica adicional que deseas ejecutar cuando el usuario es válido
+    res.send(`Bienvenido, ${usuario}!`);
+});
+
 
 
 
